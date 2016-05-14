@@ -1,19 +1,13 @@
-import Queue
+import urllib2
+import urllib
 
-initial_page = "http://www.renminribao.co"
-url_queue = Queue.Queue()
-seen = set()
-seen.insert(initial_page)
-url_queue.put(initial_page)
+data={}
+data['word']='Jecvay Notes'
 
-while (True):
-	if url_queue.size() > 0 :
-		current_url = url_queue.get()
-		store(current_url)
-		for next_url in extract_urls(current_url):
-			if next_url not in seen:
-				seen.put(next_url)
-				url_queue.put(next_url)
-	else:
-		break
+url_values = urllib.urlencode(data)
+url = "http://www.baidu.com/s?"
+full_url = url + url_values
 
+
+response = urllib2.urlopen(full_url)
+print response.read()
