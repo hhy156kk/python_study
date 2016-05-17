@@ -1,16 +1,13 @@
 import urllib2
-import urllib
+import cookielib
 
-url = 'http://www.server.com/login'
-user_agent = 'Mozilla/4.0 (compatible; MSIE 5.5; Windows NT)'
+filename = 'cookie.txt'
 
-values = {"username":"385708813@qq.com", "password":"hhy156kk"}
-headers = {'User-Agent':user_agent,'Referer':'http://www.zhihu.com/articles'}
+cookie = cookielib.MozillaCookieJar(filename)
 
-data = urllib.urlencode(values)
+handler = urllib2.HTTPCookieProcessor(cookie)
 
-request = urllib2.Request(url,data,headers)
+opener = urllib2.build_opener(handler)
+response = opener.open("http://www.baidu.com")
+cookie.save(ignore_discard=True,ignore_expires=True)
 
-response = urllib2.urlopen(request)
-
-print response.read()
