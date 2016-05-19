@@ -1,13 +1,22 @@
-import urllib2
-import cookielib
+from bs4 import BeautifulSoup
 
-filename = 'cookie.txt'
+html =  """
+<html><head><title>The Dormouse's story</title></head>
+<body>
+<p class="title" name="dromouse"><b>The Dormouse's story</b></p>
+<p class="story">Once upon a time there were three little sisters; and their names were
+<a href="http://example.com/elsie" class="sister" id="link1"><!-- Elsie --></a>,
+<a href="http://example.com/lacie" class="sister" id="link2">Lacie</a> and
+<a href="http://example.com/tillie" class="sister" id="link3">Tillie</a>;
+and they lived at the bottom of a well.</p>
+<p class="story">...</p>
+"""
 
-cookie = cookielib.MozillaCookieJar(filename)
+soup = BeautifulSoup(html)
+#print soup.prettify()
 
-handler = urllib2.HTTPCookieProcessor(cookie)
-
-opener = urllib2.build_opener(handler)
-response = opener.open("http://www.baidu.com")
-cookie.save(ignore_discard=True,ignore_expires=True)
-
+print soup.title
+print type(soup.head)
+print soup.name
+print soup.head.name
+print soup.p['class']
