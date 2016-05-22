@@ -1,22 +1,19 @@
-from bs4 import BeautifulSoup
+#_*_ coding: utf-8_*_
+import urllib
+import urllib2
+import re
 
-html =  """
-<html><head><title>The Dormouse's story</title></head>
-<body>
-<p class="title" name="dromouse"><b>The Dormouse's story</b></p>
-<p class="story">Once upon a time there were three little sisters; and their names were
-<a href="http://example.com/elsie" class="sister" id="link1"><!-- Elsie --></a>,
-<a href="http://example.com/lacie" class="sister" id="link2">Lacie</a> and
-<a href="http://example.com/tillie" class="sister" id="link3">Tillie</a>;
-and they lived at the bottom of a well.</p>
-<p class="story">...</p>
-"""
+page = 2
+url = 'http://www.qiushibaike.com/hot/page/' + str(page)
+user_agent = 'Mozilla/4.0 (compatible; MSIE 5.5; Windows NT)'
+headers = {'User-Agent': user_agent}
 
-soup = BeautifulSoup(html)
-#print soup.prettify()
+request = urllib2.Request(url, headers=headers)
+response = urllib2.urlopen(request)
 
-print soup.title
-print type(soup.head)
-print soup.name
-print soup.head.name
-print soup.p['class']
+content = response.read().decode('utf-8')
+print content
+pattern = re.compile(r'<div.*?class="content">(.*?)</div>', re.S)
+items = re.findall(pattern, content)
+for item in items:
+    print item
