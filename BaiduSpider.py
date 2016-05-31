@@ -21,15 +21,20 @@ class BDTB:
     def getTitle(self):
         page = self.getPage(1)
         pattern = re.compile(r"<h3.*?>(.*?)</h3>",re.S)
-        items = re.findall(pattern,page)
-        for item in items:
-            print item
+        result = re.search(pattern,page)
+        if result:
+            return result.group(1).strip()
+        else:
+            return None
 
     def getPageNum(self):
         page = self.getPage(1)
         pattern = re.compile(r'<li class="l_reply_num.*?</span>.*?<span class="red">(.*?)</span>',re.S)
-        items = re.findall(pattern,page)
-        print items[0]
+        result = re.search(pattern,page)
+        if result:
+            return result.group(1).strip()
+        else:
+            return None
 
     def getContent(self):
         page = self.getPage(1)
