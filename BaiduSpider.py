@@ -63,7 +63,10 @@ class BDTB:
             contents.append(content.encode('utf-8'))
             print content
         return contents
-
+    def start(self):
+        indexPage = self.getPage(1)
+        pageNum = self.getPageNum(indexPage)
+        title = self.getTitle(indexPage)
 
 baseUrl = 'http://tieba.baidu.com/p/3138733512'
 bdtb = BDTB(baseUrl,1)
